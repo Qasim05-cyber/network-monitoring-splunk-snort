@@ -1,6 +1,8 @@
 # Network Traffic Monitoring with Snort and Splunk
 
-[Watch my walkthrough](network-monitoring-edited.mp4)
+## Watch my walkthrough
+
+https://github.com/user-attachments/assets/62a754d4-7d41-4577-879c-21e96ba736bd
 
 I set up firewall logging and intrusion detection, then tested whether I could find suspicious traffic in the logs. I used pfSense, Snort, Kiwi Syslog, and Splunk, followed by an Nmap scan and an Infection Monkey simulation from the DMZ.
 
