@@ -30,6 +30,47 @@ I reviewed pfSense system and firewall logs, configured a Snort pass list, and e
 
 I forwarded firewall logs to Kiwi Syslog and enabled Snort on the DMZ interface with community rules. Both Snort interfaces were running with **blocking disabled**, so this tested detection rather than automatic prevention.
 
+<details>
+<summary>Setup screenshots (1–9)</summary>
+
+**pfSense system logs**
+
+![pfSense system logs](01-system-logs.jpg)
+
+**Blocked WAN traffic**
+
+![Blocked WAN traffic](02-firewall-logs.jpg)
+
+**Snort pass list**
+
+![Snort pass list](03-snort-pass-list.jpg)
+
+**Snort running on LAN**
+
+![Snort running on LAN](04-snort-lan-running.jpg)
+
+**Three successful pings**
+
+![Three successful pings](05-successful-ping.jpg)
+
+**Six ICMP alerts**
+
+![Six ICMP alerts](06-snort-icmp-alerts.jpg)
+
+**Firewall log forwarding to Kiwi**
+
+![Firewall log forwarding to Kiwi](07-kiwi-syslog.jpg)
+
+**Snort running on LAN and DMZ**
+
+![Snort running on LAN and DMZ](08-snort-lan-dmz-running.jpg)
+
+**Community rules enabled**
+
+![Community rules enabled](09-community-rules.jpg)
+
+</details>
+
 ## 2. Perimeter scan and centralized logging
 
 I ran the following command in Zenmap against the lab's public-facing target subnet:
@@ -41,6 +82,12 @@ nmap -sS -sU --script auth 172.40.0.0/27
 The scan completed in 94.65 seconds, checking 32 IP addresses and finding two hosts up. The visible results included FTP, SSH, Telnet, HTTP, VNC, X11, and IRC. Anonymous FTP login was allowed, although directory listing failed because the advertised passive address differed from the public-facing address.
 
 I searched Splunk for Snort events and observed alerts such as **ET SCAN Potential SSH Scan**, **403 Forbidden**, and **.htaccess access**.
+
+![Splunk indexed events](10-splunk-indexed-events.png)
+
+![Completed Nmap scan](11-nmap-scan-results.png)
+
+![Snort perimeter alerts in Splunk](12-splunk-perimeter-alerts.png)
 
 ## 3. DMZ breach simulation
 
@@ -58,6 +105,12 @@ The report listed these services as reachable from clean-ubuntu:
 | 172.31.0.50 | clean-ubuntu | No services listed in this table |
 
 The map showed scan paths and an exploit path toward the Unix target. The report flagged critical security issues. Reachable services do not by themselves prove that a LAN host was infected.
+
+![Completed Infection Monkey map](13-infection-map.png)
+
+![Security report overview](14-security-report.png)
+
+![Discovered hosts and services](14b-discovered-hosts-and-services.png)
 
 ## 4. Finding the simulation in Splunk
 
@@ -84,6 +137,8 @@ snort "172.31.0.50"
 ```
 
 That narrows the results to events mentioning the initial Monkey server. It can miss later activity from other hosts, so the time window and infection map still matter. This refinement is a suggested improvement, not the query shown in the screenshot.
+
+![Infection Monkey traffic detected in Splunk](15-splunk-infection-monkey-alerts.png)
 
 ## What I would improve
 
