@@ -1,5 +1,7 @@
 # Network Traffic Monitoring with Snort and Splunk
 
+[Watch my walkthrough](network-monitoring-edited.mp4)
+
 I set up firewall logging and intrusion detection, then tested whether I could find suspicious traffic in the logs. I used pfSense, Snort, Kiwi Syslog, and Splunk, followed by an Nmap scan and an Infection Monkey simulation from the DMZ.
 
 ## What I found
@@ -30,8 +32,7 @@ I reviewed pfSense system and firewall logs, configured a Snort pass list, and e
 
 I forwarded firewall logs to Kiwi Syslog and enabled Snort on the DMZ interface with community rules. Both Snort interfaces were running with **blocking disabled**, so this tested detection rather than automatic prevention.
 
-<details>
-<summary>Setup screenshots (1–9)</summary>
+### Setup screenshots (1–9)
 
 **pfSense system logs**
 
@@ -69,7 +70,6 @@ I forwarded firewall logs to Kiwi Syslog and enabled Snort on the DMZ interface 
 
 ![Community rules enabled](09-community-rules.jpg)
 
-</details>
 
 ## 2. Perimeter scan and centralized logging
 
